@@ -1,0 +1,38 @@
+{
+  "schemaVersion": 1,
+  "id": "lunachat",
+  "version": "${version}",
+  "name": "Deteriorated LunaChat",
+  "description": "Part of LunaChat Reproduction",
+  "authors": [
+    "Pitan"
+  ],
+  "contact": {
+    "homepage": "https://www.curseforge.com/minecraft/mc-mods/rubycraft-p",
+    "sources": "https://github.com/PTOM76/RubyCraft",
+    "issues": "https://github.com/PTOM76/RubyCraft/issues"
+  },
+
+  "license": "MIT",
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "ml.pkom.lunachat.LunaChat"
+    ]
+  },
+  "mixins": [
+    {
+      "config": "lunachat.mixins.json",
+      "environment": "*"
+    }
+  ],
+
+  "depends": {
+    "fabricloader": "*",
+    "fabric": "*",
+    "minecraft": "*"
+  },
+  "suggests": {
+    "another-mod": "*"
+  }
+}
