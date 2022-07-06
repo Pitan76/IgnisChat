@@ -1,3 +1,4 @@
+動作確認済みバージョン: 1.16～1.19
 # Deteriorated LunaChat
 LunaChatと名乗るのは失礼に当たると思ったのでDeteriorated LunaChatとさせていただきます。
 
