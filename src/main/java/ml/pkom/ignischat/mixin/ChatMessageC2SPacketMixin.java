@@ -2,58 +2,44 @@ package ml.pkom.ignischat.mixin;
 
 import com.github.ucchyocean.lc3.japanize.IMEConverter;
 import com.github.ucchyocean.lc3.japanize.YukiKanaConverter;
-import net.minecraft.server.filter.TextStream;
-import net.minecraft.server.network.ServerPlayNetworkHandler;
+import net.minecraft.network.packet.c2s.play.ChatMessageC2SPacket;
+import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-@Mixin(ServerPlayNetworkHandler.class)
-public class ChatMixin {
-    // ループを防ぐためのスキップ用
-    @Unique
-    private static boolean SKIP = false;
+@Mixin(ChatMessageC2SPacket.class)
+public class ChatMessageC2SPacketMixin {
+
+    @Shadow @Final private String chatMessage;
 
     // 通常のチャットの処理メソッド
-    @Inject(method = "handleMessage", at = @At("HEAD"), cancellable = true)
-    private void inject_handleMessage(TextStream.Message message, CallbackInfo ci) {
-        if (message == null) return;
-        String string = message.getRaw();
+    @Inject(method = "getChatMessage", at = @At("HEAD"), cancellable = true)
+    private void inject_handleMessage(CallbackInfoReturnable<String> cir) {
+
+        if (chatMessage == null) return;
+        String string = chatMessage;
 
         if (string.startsWith("/")) {
             return;
         }
 
-        if (SKIP) {
-            SKIP = false;
-            return;
-        }
-
-        ServerPlayNetworkHandlerAccessor handlerAccessor = ((ServerPlayNetworkHandlerAccessor) this);
         if (string.startsWith("#")) {
             string = string.substring(1);
-            SKIP = true;
-            ((TextStream_MessageAccessor) message).setRaw(string);
-            handlerAccessor.handleMessage(message);
-            ci.cancel();
+            cir.setReturnValue(string);
             return;
         }
 
         if (containsUnicode(string)) {
-            SKIP = true;
-            ((TextStream_MessageAccessor) message).setRaw(replaceAmpersand(string));
-            handlerAccessor.handleMessage(message);
-            ci.cancel();
+            cir.setReturnValue(replaceAmpersand(string));
             return;
         }
 
         string = string + " &6(" + IMEConverter.convByGoogleIME(YukiKanaConverter.conv(removeAmpersand(string))) + ")";
-        SKIP = true;
-        ((TextStream_MessageAccessor) message).setRaw(replaceAmpersand(string));
-        handlerAccessor.handleMessage(message);
-        ci.cancel();
+        cir.setReturnValue(replaceAmpersand(string));
     }
 
     @Unique

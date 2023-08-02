@@ -4,10 +4,8 @@
   "package": "ml.pkom.ignischat.mixin",
   "compatibilityLevel": "JAVA_8",
   "mixins": [
-    "ChatMixin",
-    "ServerPlayNetworkHandlerAccessor",
-    "SharedConstantsMixin",
-    "TextStream_MessageAccessor"
+    "ChatMessageC2SPacketMixin",
+    "SharedConstantsMixin"
   ],
   "injectors": {
     "defaultRequire": 1
