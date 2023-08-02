@@ -2,14 +2,13 @@ package ml.pkom.ignischat.mixin;
 
 import com.github.ucchyocean.lc3.japanize.IMEConverter;
 import com.github.ucchyocean.lc3.japanize.YukiKanaConverter;
+import net.minecraft.server.filter.TextStream;
 import net.minecraft.server.network.ServerPlayNetworkHandler;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-
-import java.util.function.Consumer;
 
 @Mixin(ServerPlayNetworkHandler.class)
 public class ChatMixin {
@@ -18,9 +17,14 @@ public class ChatMixin {
     private static boolean SKIP = false;
 
     // 通常のチャットの処理メソッド
-    @Inject(method = "method_31286(Ljava/lang/String;)V", at = @At("HEAD"), cancellable = true)
-    private void injectMethod_31286(String string, CallbackInfo ci) {
-        if (string == null) return;
+    @Inject(method = "handleMessage", at = @At("HEAD"), cancellable = true)
+    private void inject_handleMessage(TextStream.Message message, CallbackInfo ci) {
+        if (message == null) return;
+        String string = message.getRaw();
+
+        if (string.startsWith("/")) {
+            return;
+        }
 
         if (SKIP) {
             SKIP = false;
@@ -31,21 +35,24 @@ public class ChatMixin {
         if (string.startsWith("#")) {
             string = string.substring(1);
             SKIP = true;
-            handlerAccessor.method_31286(string);
+            ((TextStream_MessageAccessor) message).setRaw(string);
+            handlerAccessor.handleMessage(message);
             ci.cancel();
             return;
         }
 
         if (containsUnicode(string)) {
             SKIP = true;
-            handlerAccessor.method_31286(replaceAmpersand(string));
+            ((TextStream_MessageAccessor) message).setRaw(replaceAmpersand(string));
+            handlerAccessor.handleMessage(message);
             ci.cancel();
             return;
         }
 
         string = string + " &6(" + IMEConverter.convByGoogleIME(YukiKanaConverter.conv(removeAmpersand(string))) + ")";
         SKIP = true;
-        handlerAccessor.method_31286(replaceAmpersand(string));
+        ((TextStream_MessageAccessor) message).setRaw(replaceAmpersand(string));
+        handlerAccessor.handleMessage(message);
         ci.cancel();
     }
 

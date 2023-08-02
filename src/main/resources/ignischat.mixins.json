@@ -6,7 +6,8 @@
   "mixins": [
     "ChatMixin",
     "ServerPlayNetworkHandlerAccessor",
-    "SharedConstantsMixin"
+    "SharedConstantsMixin",
+    "TextStream_MessageAccessor"
   ],
   "injectors": {
     "defaultRequire": 1
