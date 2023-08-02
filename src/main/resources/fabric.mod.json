@@ -1,38 +1,34 @@
 {
   "schemaVersion": 1,
-  "id": "lunachat",
+  "id": "ignischat",
   "version": "${version}",
-  "name": "Deteriorated LunaChat",
-  "description": "Part of LunaChat Reproduction",
+  "name": "IgnisChat",
+  "description": "チャット上でローマ字を日本語へ変換します。",
   "authors": [
     "Pitan"
   ],
   "contact": {
-    "homepage": "https://www.curseforge.com/minecraft/mc-mods/rubycraft-p",
-    "sources": "https://github.com/PTOM76/RubyCraft",
-    "issues": "https://github.com/PTOM76/RubyCraft/issues"
+    "homepage": "https://www.curseforge.com/minecraft/mc-mods/ignischat",
+    "sources": "https://github.com/PTOM76/IgnisChat",
+    "issues": "https://github.com/PTOM76/IgnisChat/issues"
   },
 
   "license": "MIT",
   "environment": "*",
   "entrypoints": {
     "main": [
-      "ml.pkom.lunachat.LunaChat"
+      "ml.pkom.ignischat.IgnisChat"
     ]
   },
   "mixins": [
     {
-      "config": "lunachat.mixins.json",
+      "config": "ignischat.mixins.json",
       "environment": "*"
     }
   ],
 
   "depends": {
-    "fabricloader": "*",
     "fabric": "*",
     "minecraft": "*"
-  },
-  "suggests": {
-    "another-mod": "*"
   }
 }

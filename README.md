@@ -1,11 +1,10 @@
-動作確認済みバージョン: 1.16～1.19
-# Deteriorated LunaChat
-LunaChatと名乗るのは失礼に当たると思ったのでDeteriorated LunaChatとさせていただきます。
-
+# IgnisChat
+<a href="https://github.com/ucchyocean/LunaChat">LunaChat</a>の一部の機能(ローマ字→日本語)を持ってきたものです。
 Fabric用に作っており、現在、ローマ字→日本語、&→§のみ完成しています。
 
-1.16.5のみ試しているので1.17.1で動くかはわかりません。動いたらIssuesでもいいので報告してくれるとありがたいです。
-## 予定
-- 計算機能
-- カスタマイズ
-- Config(yml)
+# ライセンス
+- GNU LGPL-3.0
+
+私は普段、MITしか使いませんが、ライブラリがLunaChatなのでLGPLとなります。
+このMODのライセンスは、以下のLGPL-3.0となります。
+- http://sourceforge.jp/magazine/07/09/05/017211

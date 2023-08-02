@@ -1,4 +1,4 @@
-package ml.pkom.lunachat.mixin;
+package ml.pkom.ignischat.mixin;
 
 import net.minecraft.server.network.ServerPlayNetworkHandler;
 import org.spongepowered.asm.mixin.Mixin;
@@ -8,6 +8,7 @@ import java.util.function.Consumer;
 
 @Mixin(ServerPlayNetworkHandler.class)
 public interface ServerPlayNetworkHandlerAccessor {
-    @Invoker("filterText")
-    public <T> void invokeFilterText(String text, Consumer<T> consumer);
+    // メソッドへのアクセス用
+    @Invoker("method_31286")
+    void method_31286(String string);
 }

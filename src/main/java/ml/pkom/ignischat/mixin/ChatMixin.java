@@ -1,9 +1,10 @@
-package ml.pkom.lunachat.mixin;
+package ml.pkom.ignischat.mixin;
 
 import com.github.ucchyocean.lc3.japanize.IMEConverter;
 import com.github.ucchyocean.lc3.japanize.YukiKanaConverter;
 import net.minecraft.server.network.ServerPlayNetworkHandler;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
@@ -12,36 +13,43 @@ import java.util.function.Consumer;
 
 @Mixin(ServerPlayNetworkHandler.class)
 public class ChatMixin {
-    private static boolean PROCESSED = false;
+    // ループを防ぐためのスキップ用
+    @Unique
+    private static boolean SKIP = false;
 
-    @Inject(method = "filterText(Ljava/lang/String;Ljava/util/function/Consumer;)V", at = @At("HEAD"), cancellable = true)
-    private void filterText(String text, Consumer<String> consumer, CallbackInfo ci) {
-        if (PROCESSED) {
-            PROCESSED = false;
+    // 通常のチャットの処理メソッド
+    @Inject(method = "method_31286(Ljava/lang/String;)V", at = @At("HEAD"), cancellable = true)
+    private void injectMethod_31286(String string, CallbackInfo ci) {
+        if (string == null) return;
+
+        if (SKIP) {
+            SKIP = false;
             return;
-        } else {
-            PROCESSED = true;
         }
-        ServerPlayNetworkHandler handler = ((ServerPlayNetworkHandler)(Object)this);
-        ServerPlayNetworkHandlerAccessor handlerAccessor = ((ServerPlayNetworkHandlerAccessor)(Object)this);
-        if (text.startsWith("#")) {
-            text = text.substring(1);
-            handlerAccessor.invokeFilterText(text, consumer);
+
+        ServerPlayNetworkHandlerAccessor handlerAccessor = ((ServerPlayNetworkHandlerAccessor) this);
+        if (string.startsWith("#")) {
+            string = string.substring(1);
+            SKIP = true;
+            handlerAccessor.method_31286(string);
             ci.cancel();
             return;
         }
 
-        if (containsUnicode(text)) {
-            handlerAccessor.invokeFilterText(replacer(text), consumer);
+        if (containsUnicode(string)) {
+            SKIP = true;
+            handlerAccessor.method_31286(replaceAmpersand(string));
             ci.cancel();
             return;
         }
 
-        text = text + " &6(" + IMEConverter.convByGoogleIME(YukiKanaConverter.conv(replacerSys(text))) + ")";
-        handlerAccessor.invokeFilterText(replacer(text), consumer);
+        string = string + " &6(" + IMEConverter.convByGoogleIME(YukiKanaConverter.conv(removeAmpersand(string))) + ")";
+        SKIP = true;
+        handlerAccessor.method_31286(replaceAmpersand(string));
         ci.cancel();
     }
 
+    @Unique
     private static boolean containsUnicode(String str) {
         for(int i = 0 ; i < str.length() ; i++) {
             char ch = str.charAt(i);
@@ -65,7 +73,8 @@ public class ChatMixin {
         return false;
     }
 
-    private static String replacer(String string) {
+    @Unique
+    private static String replaceAmpersand(String string) {
         string = string.replace("&a", "§a");
         string = string.replace("&b", "§b");
         string = string.replace("&c", "§c");
@@ -89,7 +98,8 @@ public class ChatMixin {
         return string;
     }
 
-    private static String replacerSys(String string) {
+    @Unique
+    private static String removeAmpersand(String string) {
         string = string.replace("&a", "");
         string = string.replace("&b", "");
         string = string.replace("&c", "");
