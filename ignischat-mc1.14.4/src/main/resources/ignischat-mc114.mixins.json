@@ -1,0 +1,13 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "ml.pkom.ignischat.mc114.mixin",
+  "compatibilityLevel": "JAVA_8",
+  "mixins": [
+    "ChatMessageC2SPacketMixin",
+    "SharedConstantsMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

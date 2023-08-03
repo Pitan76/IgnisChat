@@ -1,7 +1,7 @@
 {
   "required": true,
   "minVersion": "0.8",
-  "package": "ml.pkom.ignischat.mixin",
+  "package": "ml.pkom.ignischat.mc120.mixin",
   "compatibilityLevel": "JAVA_8",
   "mixins": [
     "ChatMessageC2SPacketMixin",

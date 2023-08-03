@@ -1,4 +1,4 @@
-package ml.pkom.ignischat.mixin;
+package ml.pkom.ignischat.mc119.mixin;
 
 import net.minecraft.SharedConstants;
 import org.spongepowered.asm.mixin.Mixin;

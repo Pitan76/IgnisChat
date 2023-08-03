@@ -1,51 +1,10 @@
-package ml.pkom.ignischat.mixin;
+package ml.pkom.ignischat.common;
 
-import com.github.ucchyocean.lc3.japanize.IMEConverter;
-import com.github.ucchyocean.lc3.japanize.YukiKanaConverter;
-import net.minecraft.network.packet.c2s.play.ChatMessageC2SPacket;
-import org.spongepowered.asm.mixin.Final;
-import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Shadow;
-import org.spongepowered.asm.mixin.Unique;
-import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
+public class IgnisChatAPI {
 
-@Mixin(ChatMessageC2SPacket.class)
-public class ChatMessageC2SPacketMixin {
-
-    @Shadow @Final private String chatMessage;
-
-    // 通常のチャットの処理メソッド
-    @Inject(method = "getChatMessage", at = @At("HEAD"), cancellable = true)
-    private void inject_handleMessage(CallbackInfoReturnable<String> cir) {
-
-        if (chatMessage == null) return;
-        String string = chatMessage;
-
-        if (string.startsWith("/")) {
-            return;
-        }
-
-        if (string.startsWith("#")) {
-            string = string.substring(1);
-            cir.setReturnValue(string);
-            return;
-        }
-
-        if (containsUnicode(string)) {
-            cir.setReturnValue(replaceAmpersand(string));
-            return;
-        }
-
-        string = string + " &6(" + IMEConverter.convByGoogleIME(YukiKanaConverter.conv(removeAmpersand(string))) + ")";
-        cir.setReturnValue(replaceAmpersand(string));
-    }
-
-    @Unique
-    private static boolean containsUnicode(String str) {
-        for(int i = 0 ; i < str.length() ; i++) {
-            char ch = str.charAt(i);
+    public static boolean containsUnicode(String string) {
+        for(int i = 0 ; i < string.length() ; i++) {
+            char ch = string.charAt(i);
             Character.UnicodeBlock unicodeBlock = Character.UnicodeBlock.of(ch);
 
             if (Character.UnicodeBlock.HIRAGANA.equals(unicodeBlock))
@@ -66,8 +25,7 @@ public class ChatMessageC2SPacketMixin {
         return false;
     }
 
-    @Unique
-    private static String replaceAmpersand(String string) {
+    public static String replaceAmpersand(String string) {
         string = string.replace("&a", "§a");
         string = string.replace("&b", "§b");
         string = string.replace("&c", "§c");
@@ -91,8 +49,7 @@ public class ChatMessageC2SPacketMixin {
         return string;
     }
 
-    @Unique
-    private static String removeAmpersand(String string) {
+    public static String removeAmpersand(String string) {
         string = string.replace("&a", "");
         string = string.replace("&b", "");
         string = string.replace("&c", "");

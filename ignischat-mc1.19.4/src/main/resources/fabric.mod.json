@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "id": "ignischat",
+  "id": "ignischat-mc119",
   "version": "${version}",
   "name": "IgnisChat",
   "description": "チャット上でローマ字を日本語へ変換します。",
@@ -17,10 +17,17 @@
   "environment": "*",
   "entrypoints": {
     "main": [
-      "ml.pkom.ignischat.common.IgnisChat"
+      "ml.pkom.ignischat.mc119.IgnisChat"
     ]
   },
+  "mixins": [
+    {
+      "config": "ignischat-mc119.mixins.json",
+      "environment": "*"
+    }
+  ],
+
   "depends": {
-    "minecraft": "*"
+    "minecraft": ["1.19.3", "1.19.4"]
   }
 }
