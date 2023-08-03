@@ -22,5 +22,6 @@
   },
   "depends": {
     "minecraft": "*"
-  }
+  },
+  "icon": "assets/ignischat/icon.png"
 }

@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "id": "ignischat-mc120",
   "version": "${version}",
-  "name": "IgnisChat",
+  "name": "IgnisChat for 1.20",
   "description": "チャット上でローマ字を日本語へ変換します。",
   "authors": [
     "Pitan"
@@ -26,8 +26,12 @@
       "environment": "*"
     }
   ],
-
   "depends": {
     "minecraft": ["1.20", "1.20.1"]
+  },
+  "custom": {
+    "modmenu": {
+      "parent": "ignischat"
+    }
   }
 }
