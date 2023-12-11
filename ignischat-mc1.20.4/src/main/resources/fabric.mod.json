@@ -1,8 +1,8 @@
 {
   "schemaVersion": 1,
-  "id": "ignischat-mc120",
+  "id": "ignischat-mc1204",
   "version": "${version}",
-  "name": "IgnisChat for 1.20",
+  "name": "IgnisChat for 1.20.3/4",
   "description": "チャット上でローマ字を日本語へ変換します。",
   "authors": [
     "Pitan"
@@ -17,17 +17,17 @@
   "environment": "*",
   "entrypoints": {
     "main": [
-      "ml.pkom.ignischat.mc120.IgnisChat"
+      "ml.pkom.ignischat.mc1204.IgnisChat"
     ]
   },
   "mixins": [
     {
-      "config": "ignischat-mc120.mixins.json",
+      "config": "ignischat-mc1204.mixins.json",
       "environment": "*"
     }
   ],
   "depends": {
-    "minecraft": ["1.20", "1.20.1", "1.20.2"]
+    "minecraft": ["1.20.3", "1.20.4"]
   },
   "custom": {
     "modmenu": {
