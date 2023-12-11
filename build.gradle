@@ -112,6 +112,31 @@ curseforge {
 			id = '697926'
 			changelog = 'fix'
 			releaseType = 'release'
+			addGameVersion '1.7.10'
+			addGameVersion '1.8.9'
+			addGameVersion '1.9.4'
+			addGameVersion '1.10.2'
+			addGameVersion '1.11.2'
+			addGameVersion '1.12.2'
+			addGameVersion '1.13.2'
+			addGameVersion '1.14'
+			addGameVersion '1.14.1'
+			addGameVersion '1.14.2'
+			addGameVersion '1.14.3'
+			addGameVersion '1.14.4'
+			addGameVersion '1.15'
+			addGameVersion '1.15.1'
+			addGameVersion '1.15.2'
+			addGameVersion '1.16'
+			addGameVersion '1.16.1'
+			addGameVersion '1.16.2'
+			addGameVersion '1.16.3'
+			addGameVersion '1.16.4'
+			addGameVersion '1.16.5'
+			addGameVersion '1.17'
+			addGameVersion '1.17.1'
+			addGameVersion '1.18'
+			addGameVersion '1.18.1'
 			addGameVersion '1.18.2'
 			addGameVersion '1.19'
 			addGameVersion '1.19.1'
@@ -120,6 +145,9 @@ curseforge {
 			addGameVersion '1.19.4'
 			addGameVersion '1.20'
 			addGameVersion '1.20.1'
+			addGameVersion '1.20.2'
+			addGameVersion '1.20.3'
+			addGameVersion '1.20.4'
 			addGameVersion "Fabric"
 			relations {
 				requiredDependency 'fabric-api'
@@ -142,7 +170,7 @@ modrinth {
 		projectId = 'cfQx2fbQ'
 		versionNumber = project.mod_version
 		uploadFile = remapJar
-		gameVersions = ['1.19', '1.19.1', '1.19.2', '1.19.3', '1.19.4', '1.20', '1.20.1']
+		gameVersions = ['1.7.10', '1.8.9', '1.9.4', '1.10.2', '1.11.2', '1.12.2', '1.13.2', '1.14', '1.14.1', '1.14.2', '1.14.3', '1.14.4', '1.15', '1.15.1', '1.15.2', '1.16', '1.16.1', '1.16.2', '1.16.3', '1.16.4', '1.16.5', '1.17', '1.17.1', '1.18', '1.18.1', '1.18.2', '1.19', '1.19.1', '1.19.2', '1.19.3', '1.19.4', '1.20', '1.20.1', '1.20.2', '1.20.3', '1.20.4']
 		versionType = 'release'
 		loaders = ['fabric']
 		changelog = 'fix'
