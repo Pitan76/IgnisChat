@@ -1,0 +1,13 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "ml.pkom.ignischat.mc1191.mixin",
+  "compatibilityLevel": "JAVA_8",
+  "mixins": [
+    "ServerPlayNetworkHandlerMixin",
+    "SharedConstantsMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}
